@@ -1,0 +1,96 @@
+#include <Servo.h>
+
+Servo a;
+Servo b;
+Servo c;
+
+char val;
+
+const int servoPin1 = 9;
+const int servoPin2 = 10;
+const int servoPin3 = 11;
+
+const int outputPin1 = 6;
+const int outputPin2 = 7;
+
+void setup() {
+    a.attach(servoPin1);
+    b.attach(servoPin2);
+    c.attach(servoPin3);
+    Serial.begin(9600);
+    pinMode(outputPin1, OUTPUT);
+    pinMode(outputPin2, OUTPUT);
+}
+
+void loop() {
+    if (Serial.available()) {
+        val = Serial.read();
+        Serial.println(val);
+    }
+
+    if (val == '1') {
+        a.write(90);
+        b.write(55);
+        delay(40);
+    } else if (val == '0') {
+        a.write(125);
+        b.write(90);
+        delay(40);
+    }
+
+    if (val == '2') {
+        a.write(90);
+        b.write(125);
+        delay(30);
+    } else if (val == '0') {
+        a.write(55);
+        b.write(90);
+        delay(30);
+    }
+
+    if (val == 'L') {
+        a.write(90);
+        b.write(50);
+        delay(200);
+        c.write(90);
+        c.write(145);
+        delay(30);
+    } else if (val == '0') {
+        c.write(45);
+        c.write(90);
+        a.write(125);
+        b.write(90);
+        delay(30);
+    }
+
+    if (val == 'R') {
+        a.write(90);
+        b.write(125);
+        delay(200);
+        c.write(90);
+        c.write(45);
+        delay(30);
+    } else if (val == '0') {
+        c.write(135);
+        c.write(90);
+        a.write(55);
+        b.write(90);
+        delay(30);
+    }
+
+    if (val == 'f') {
+        digitalWrite(outputPin1, HIGH);
+        delay(30);
+    } else if (val == 'M') {
+        digitalWrite(outputPin1, LOW);
+        delay(30);
+    }
+
+    if (val == 'b') {
+        digitalWrite(outputPin2, HIGH);
+        delay(30);
+    } else if (val == 'M') {
+        digitalWrite(outputPin2, LOW);
+        delay(30);
+    }
+}
